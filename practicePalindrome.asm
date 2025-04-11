@@ -45,53 +45,46 @@ main:
 nextChar:
   ; check if we are done 
   cmp rcx, rdx
-  jge printResult
+  jge palindrome
+  
+    mov rax, [qword stringSize]      
+    push rbx
+    mov rbx, rax
+    sub rbx, 1
 
-  ; swap these two characters
-      mov rax, [qword stringSize]      
-      push rbx
-      mov rbx, rax
-      sub rbx, 1
+    ; get first character and store it in rsi
+    mov rax, qword string
+    add rax, rcx
+    mov sil, [rax]
 
-      ; get first character and store it in rsi
-      mov rax, qword string
-      add rax, rcx
-      mov sil, [rax]
+    ; get oposite side character store it in rdi
+    mov rax, qword string
+    add rax, rbx
+    sub rax, rcx
+    mov dil, [rax]
+    pop rbx
 
-      ; get oposite side character store it in rdi
-      mov rax, qword string
-      add rax, rbx
-      sub rax, rcx
-      mov dil, [rax]
-
-      ; put first character in the position of the oposite character
-      mov rax, qword string
-      add rax, rcx
-      mov [rax], dil
-
-      ; put oposite character in the position of the first character
-      mov rax, qword string
-      add rax, rbx
-      sub rax, rcx
-      mov [rax], sil
-
-      pop rbx
-
-
-
-
+  ; compare the characters
+    cmp sil, dil
+    jne notPalindrome
 
   ; move to the next characters
   inc rcx
   jmp nextChar
 
 
-printResult:
-  ; printf("The reverse of the string is %s.\n", string);
-  mov rdi, qword responseFormat
+palindrome:
+  ; printf("The string %s is a palindrome.\n", string);
+  mov rdi, qword responseTrue
   mov rsi, qword string
   call printf
+  jmp endProgram
 
+notPalindrome:
+  ; printf("The string %s is not a palindrome.\n", string);
+  mov rdi, qword responseFalse
+  mov rsi, qword string
+  call printf
   jmp endProgram
 
 endProgram:
@@ -106,7 +99,8 @@ section .data
   stringSizePrompt db "What is the length of the string? ", 0
   stringSizeFormat db "%lli", 0
 
-  responseFormat db "The reverse of the string is %s.", 0ah, 0dh, 0
+  responseTrue db "The string %s is a palindrome.", 0ah, 0dh, 0
+  responseFalse db "The string %s is not a palindrome.", 0ah, 0dh, 0
 
 section .bss 
   string resb 50

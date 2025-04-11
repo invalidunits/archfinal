@@ -8,7 +8,7 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/practiceFindNumber.out",
+            "program": "${workspaceFolder}/practicePalindrome.out",
             "args": [],
             "cwd": "${workspaceFolder}"
         }

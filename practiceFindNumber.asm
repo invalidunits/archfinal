@@ -88,7 +88,7 @@ endProgram:
 
 section .data
   toFindPrompt db "Enter a number: ", 0
-  toFindFormat db "%lli", 0
+  toFindFormat db "%llxi", 0
   toFind dq 0
 
   list dq -4, 7, 6, 11, -1, 0, 3, 9, 16, -3

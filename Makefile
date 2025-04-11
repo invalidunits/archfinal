@@ -1,4 +1,4 @@
-all: practiceFindNumber.out practiceFlipString.out
+all: practiceFindNumber.out practiceFlipString.out practicePalindrome.out
 
 
 %.o: %.asm
